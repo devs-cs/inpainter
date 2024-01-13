@@ -9,6 +9,10 @@ import { XCircle as StartOverIcon } from "lucide-react";
 import { Code as CodeIcon } from "lucide-react";
 import { Rocket as RocketIcon } from "lucide-react";
 import MyButtonGroup from "components/selector";
+import Button from '@mui/material/Button';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useRouter } from 'next/router';
+// import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -18,6 +22,7 @@ export default function Home() {
   const [maskImage, setMaskImage] = useState(null);
   const [userUploadedImage, setUserUploadedImage] = useState(null);
   const [selected, setSelected] = useState(0);
+  const [finalURL, setFinalUrl] = useState(null)
 
   console.log(predictions,  error, maskImage == null, userUploadedImage== null, selected)
   const handleSubmit = async (e) => {
@@ -90,10 +95,11 @@ export default function Home() {
       setPredictions(predictions.concat([prediction]));
       console.log(prediction)
       if (prediction.status === "succeeded") {
-        console.log(prediction.output[0])
-        var blob  = await imageUrlToBlob(prediction.output[0])
+        console.log(prediction)
+        var blob  = await imageUrlToBlob(prediction.output[prediction.output.length-1])
         console.log(blob)
         setUserUploadedImage(blob);
+        setFinalUrl(prediction.output[prediction.output.length-1])
       }
     }
   };
@@ -133,6 +139,15 @@ export default function Home() {
     setMaskImage(null);
     setUserUploadedImage(null);
     setSelected(0)
+  };
+
+  const router = useRouter();
+
+  const handleButtonClick = () => {
+      router.push({
+          pathname: '/shop', // The path to the new page
+          query: { finalURL }, // Passing the finalUrl as a query parameter
+      });
   };
 
   return (
@@ -189,6 +204,22 @@ export default function Home() {
 
         <div className="max-w-[512px] mx-auto">
           <PromptForm onSubmit={handleSubmit} />
+
+          {finalURL && (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <Button
+                variant="contained"
+                style={{ backgroundColor: 'darkgreen', color: 'white', textTransform: 'none' }} // Add textTransform style here
+                endIcon={<ShoppingCartIcon/>}
+                onClick={handleButtonClick}
+            >
+                Search
+            </Button>
+        </div>
+          </div>
+          
+          )}
 
           <div className="text-center">
             {((predictions.length > 0 &&

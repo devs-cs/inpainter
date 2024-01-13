@@ -11,7 +11,7 @@ const MyButtonGroup = ({selected, setSelected, select_reset,non_sketch_reset}) =
     else if (index  == 0)
       non_sketch_reset()
   };
-  const titles = ["Composition Edits", "Local Changes", "Sketch"]
+  const titles = ["Composition Edits", "Generation", "Sketch"]
 
   return (
     <div style={{
