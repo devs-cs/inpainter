@@ -8,6 +8,7 @@ export default class Canvas extends React.Component {
     super(props);
 
     this.canvas = React.createRef();
+    this.clearCanvas = this.clearCanvas.bind(this)
   }
 
   onChange = async () => {
@@ -19,6 +20,10 @@ export default class Canvas extends React.Component {
       this.props.onDraw(data);
     }
   };
+
+  clearCanvas(){
+    this.canvas.current.clearCanvas()
+  }
 
   render() {
     const predictions = this.props.predictions.map((prediction) => {
@@ -73,7 +78,7 @@ export default class Canvas extends React.Component {
           </div>
         )}
 
-        {(predictions.length > 0 || this.props.userUploadedImage) &&
+        {(predictions.length > 0 || this.props.userUploadedImage || this.props.select == 2) &&
           !predicting && (
             <div
               className="absolute top-0 left-0 w-full h-full"
@@ -81,7 +86,7 @@ export default class Canvas extends React.Component {
             >
               <ReactSketchCanvas
                 ref={this.canvas}
-                strokeWidth={80}
+                strokeWidth={this.props.select == 2? 5 : 80}
                 strokeColor="black"
                 canvasColor="transparent"
                 onChange={this.onChange}

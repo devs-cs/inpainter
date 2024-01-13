@@ -8,6 +8,7 @@ import Download from "components/download";
 import { XCircle as StartOverIcon } from "lucide-react";
 import { Code as CodeIcon } from "lucide-react";
 import { Rocket as RocketIcon } from "lucide-react";
+import MyButtonGroup from "components/selector";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -16,7 +17,8 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [maskImage, setMaskImage] = useState(null);
   const [userUploadedImage, setUserUploadedImage] = useState(null);
-
+  const [selected, setSelected] = useState(0);
+  console.log(predictions,  error, maskImage == null, userUploadedImage== null, selected)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -70,30 +72,42 @@ export default function Home() {
     }
   };
 
-  const startOver = async (e) => {
-    e.preventDefault();
+  const select_reset = async () => {
     setPredictions([]);
     setError(null);
     setMaskImage(null);
     setUserUploadedImage(null);
   };
 
+  const startOver = async (e) => {
+    e.preventDefault();
+    setPredictions([]);
+    setError(null);
+    setMaskImage(null);
+    setUserUploadedImage(null);
+    setSelected(0)
+  };
+
   return (
     <div>
       <Head>
-        <title>Inpainting with Stable Diffusion &amp; Replicate</title>
+        <title>Shop.ai</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-
+      <div style={{ marginTop: '30px' }}></div>
+      <div className="max-w-[512px] mx-auto relative h-7">
+        <MyButtonGroup selected={selected} setSelected = {setSelected} select_reset = {select_reset}></MyButtonGroup>
+      </div>
       <main className="container mx-auto p-5">
         {error && <div>{error}</div>}
-
+        
         <div className="border-hairline max-w-[512px] mx-auto relative">
+          {selected != 2 && (
           <Dropzone
             onImageDropped={setUserUploadedImage}
             predictions={predictions}
             userUploadedImage={userUploadedImage}
-          />
+          />)}
           <div
             className="bg-gray-50 relative max-h-[512px] w-full flex items-stretch"
             // style={{ height: 0, paddingBottom: "100%" }}
@@ -102,6 +116,7 @@ export default function Home() {
               predictions={predictions}
               userUploadedImage={userUploadedImage}
               onDraw={setMaskImage}
+              select = {selected}
             />
           </div>
         </div>
@@ -121,13 +136,13 @@ export default function Home() {
             )}
 
             <Download predictions={predictions} />
-            <Link href="https://replicate.com/stability-ai/stable-diffusion">
+            {/* <Link href="https://replicate.com/stability-ai/stable-diffusion">
               <a target="_blank" className="lil-button">
                 <RocketIcon className="icon" />
                 Run Stable Diffusion with an API
               </a>
-            </Link>
-            <Link href="https://github.com/zeke/inpainter">
+            </Link> */}
+            <Link href="https://github.com/devs-cs/inpainter">
               <a
                 className="lil-button"
                 target="_blank"
