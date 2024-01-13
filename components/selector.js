@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { ButtonGroup, Button } from '@mui/material';
 
-const MyButtonGroup = ({selected, setSelected, select_reset}) => {
+const MyButtonGroup = ({selected, setSelected, select_reset,non_sketch_reset}) => {
   
   console.log(setSelected)
   const handleButtonClick = (index) => {
     setSelected(index);
     if (index == 2)
       select_reset()
+    else if (index  == 0)
+      non_sketch_reset()
   };
   const titles = ["Composition Edits", "Local Changes", "Sketch"]
 

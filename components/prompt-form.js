@@ -1,15 +1,14 @@
 import { useState } from "react";
 
-const samplePrompts = [
-  "a gentleman otter in a 19th century portrait",
-  "bowl of ramen in the style of a comic book",
-  "flower field drawn by Jean-Jacques Sempé",
-  "illustration of a taxi cab in the style of r crumb",
-  "multicolor hyperspace",
-  "painting of fruit on a table in the style of Raimonds Staprans",
-  "pencil sketch of robots playing poker",
-  "photo of an astronaut riding a horse",
-];
+const samplePrompts = ["A sleek purple outdoor bicycle against a cityscape background.",
+"A luxurious handbag inspired by Louis Vuitton designs, with monogram patterns.",
+"High-tech running shoes with futuristic design elements.",
+"Elegant wristwatch with intricate detailing, reminiscent of a Rolex.",
+"A cozy, modern armchair in a minimalist living room setting.",
+"A vibrant, abstract painting of a summer dress.",
+"A set of professional chef's knives displayed on a wooden cutting board.",
+"A sophisticated, high-end laptop with a sleek, metallic finish."]
+
 import sample from "lodash/sample";
 
 export default function PromptForm(props) {

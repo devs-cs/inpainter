@@ -18,6 +18,7 @@ export default function Home() {
   const [maskImage, setMaskImage] = useState(null);
   const [userUploadedImage, setUserUploadedImage] = useState(null);
   const [selected, setSelected] = useState(0);
+
   console.log(predictions,  error, maskImage == null, userUploadedImage== null, selected)
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,16 +28,38 @@ export default function Home() {
       ? prevPrediction.output[prevPrediction.output.length - 1]
       : null;
 
-    const body = {
-      prompt: e.target.prompt.value,
-      init_image: userUploadedImage
-        ? await readAsDataURL(userUploadedImage)
-        : // only use previous prediction as init image if there's a mask
-        maskImage
-        ? prevPredictionOutput
-        : null,
-      mask: maskImage,
-    };
+    var body;
+    if(selected == 1)
+    {
+      body = {
+        prompt: e.target.prompt.value,
+        init_image: userUploadedImage
+          ? await readAsDataURL(userUploadedImage)
+          : // only use previous prediction as init image if there's a mask
+          maskImage
+          ? prevPredictionOutput
+          : null,
+        mask: maskImage,
+        selected: 1
+      };
+    }
+    else if (selected == 2){
+
+      body ={
+        prompt: e.target.prompt.value,
+        image: maskImage,
+        selected: 2
+      };
+    }
+    else if (userUploadedImage){
+      body = {
+        prompt: e.target.prompt.value,
+        image:  await readAsDataURL(userUploadedImage),
+        selected: 0
+      }
+    }
+
+    console.log(body)
 
     const response = await fetch("/api/predictions", {
       method: "POST",
@@ -65,19 +88,43 @@ export default function Home() {
         return;
       }
       setPredictions(predictions.concat([prediction]));
-
+      console.log(prediction)
       if (prediction.status === "succeeded") {
-        setUserUploadedImage(null);
+        console.log(prediction.output[0])
+        var blob  = await imageUrlToBlob(prediction.output[0])
+        console.log(blob)
+        setUserUploadedImage(blob);
       }
     }
   };
+
+  function imageUrlToBlob(imageUrl) {
+    return fetch(imageUrl)
+        .then(response => {
+            // Check if the fetch was successful
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            // Convert the response to a blob
+            return response.blob();
+        })
+        .catch(e => {
+            console.error('There was a problem fetching the image:', e);
+            throw e;  // Re-throw the error for further handling
+        });
+}
 
   const select_reset = async () => {
     setPredictions([]);
     setError(null);
     setMaskImage(null);
     setUserUploadedImage(null);
+
   };
+
+  const non_sketch_reset = async () => {
+    setMaskImage(null)
+  }
 
   const startOver = async (e) => {
     e.preventDefault();
@@ -91,35 +138,54 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Shop.ai</title>
+        <title>ShopVisual</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div style={{ marginTop: '30px' }}></div>
       <div className="max-w-[512px] mx-auto relative h-7">
-        <MyButtonGroup selected={selected} setSelected = {setSelected} select_reset = {select_reset}></MyButtonGroup>
+        <MyButtonGroup selected={selected} setSelected = {setSelected} select_reset = {select_reset} non_sketch_reset = {non_sketch_reset}></MyButtonGroup>
       </div>
       <main className="container mx-auto p-5">
         {error && <div>{error}</div>}
         
-        <div className="border-hairline max-w-[512px] mx-auto relative">
-          {selected != 2 && (
-          <Dropzone
-            onImageDropped={setUserUploadedImage}
-            predictions={predictions}
-            userUploadedImage={userUploadedImage}
-          />)}
-          <div
-            className="bg-gray-50 relative max-h-[512px] w-full flex items-stretch"
-            // style={{ height: 0, paddingBottom: "100%" }}
-          >
+        <div className="border-hairline max-w-[512px] mx-auto relative ">
+          
+    
+        {selected !=2 && (
+           <div className="border-hairline max-w-[512px] mx-auto relative">
+           <Dropzone
+             onImageDropped={setUserUploadedImage}
+             predictions={predictions}
+             userUploadedImage={userUploadedImage}
+           />
+           <div
+             className="bg-gray-50 relative max-h-[512px] w-full flex items-stretch"
+             // style={{ height: 0, paddingBottom: "100%" }}
+           >
+             <Canvas
+               predictions={predictions}
+               userUploadedImage={userUploadedImage}
+               onDraw={setMaskImage}
+               select={selected}
+             />
+           </div>
+         </div>
+        )}
+        <div
+          className={`bg-gray-50 relative max-h-[512px] w-full flex items-stretch `}
+          // Conditionally apply height based on 'selected' value
+        >
+          {selected ==2 && (
             <Canvas
               predictions={predictions}
               userUploadedImage={userUploadedImage}
               onDraw={setMaskImage}
-              select = {selected}
+              select={selected}
             />
-          </div>
+          )}
         </div>
+      </div>
+
 
         <div className="max-w-[512px] mx-auto">
           <PromptForm onSubmit={handleSubmit} />

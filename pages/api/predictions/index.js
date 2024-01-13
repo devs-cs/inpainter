@@ -12,12 +12,24 @@ export default async function handler(req, res) {
     req.body.mask = addBackgroundToPNG(req.body.mask);
   }
 
+
+  let vers;
+  console.log("HERE IS BODY" + req.body)
+  if (req.body.selected === 2)
+    vers  = "435061a1b5a4c1e26740464bf786efdfa9cb3a3ac488595a2de23e143fdb0117" 
+  else if (req.body.selected ==1)
+    vers= "be04660a5b93ef2aff61e3668dedb4cbeb14941e62a3fd5998364a32d613e35e"
+  else
+   vers = "30c1d0b916a6f8efce20493f5d61ee27491ab2a60437c13c588468b9810ec23f"
+  
   const body = JSON.stringify({
     // Pinned to a specific version of Stable Diffusion, fetched from:
     // https://replicate.com/stability-ai/stable-diffusion
-    version: "be04660a5b93ef2aff61e3668dedb4cbeb14941e62a3fd5998364a32d613e35e",
+    version: vers,
     input: req.body,
   });
+
+  console.log(body)
 
   const response = await fetch(`${API_HOST}/v1/predictions`, {
     method: "POST",
@@ -27,6 +39,8 @@ export default async function handler(req, res) {
     },
     body,
   });
+
+  console.log(response)
 
   if (response.status !== 201) {
     let error = await response.json();

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useImperativeHandle, forwardRef} from "react";
 import Image from "next/image";
 import { ReactSketchCanvas } from "react-sketch-canvas";
 import Spinner from "components/spinner";
@@ -13,7 +13,7 @@ export default class Canvas extends React.Component {
 
   onChange = async () => {
     const paths = await this.canvas.current.exportPaths();
-
+    // console.log("change")
     // only respond if there are paths to draw (don't want to send a blank canvas)
     if (paths.length) {
       const data = await this.canvas.current.exportImage("svg");
@@ -21,9 +21,10 @@ export default class Canvas extends React.Component {
     }
   };
 
+  
   clearCanvas(){
     this.canvas.current.clearCanvas()
-  }
+  } 
 
   render() {
     const predictions = this.props.predictions.map((prediction) => {
@@ -35,7 +36,7 @@ export default class Canvas extends React.Component {
 
     const predicting = predictions.some((prediction) => !prediction.output);
     const lastPrediction = predictions[predictions.length - 1];
-
+    
     return (
       <div className="relative w-full aspect-square">
         {/* PREDICTION IMAGES */}
@@ -87,7 +88,7 @@ export default class Canvas extends React.Component {
               <ReactSketchCanvas
                 ref={this.canvas}
                 strokeWidth={this.props.select == 2? 5 : 80}
-                strokeColor="black"
+                strokeColor={this.props.select == 0 ? "transparent": "black"}
                 canvasColor="transparent"
                 onChange={this.onChange}
               />
