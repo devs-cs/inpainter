@@ -240,7 +240,7 @@ export default function Home() {
                 Run Stable Diffusion with an API
               </a>
             </Link> */}
-            <Link href="https://github.com/devs-cs/inpainter">
+            <Link href="https://github.com/devs-cs/shop-visual">
               <a
                 className="lil-button"
                 target="_blank"
