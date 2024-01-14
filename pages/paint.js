@@ -38,7 +38,7 @@ export default function Home() {
     {
       body = {
         prompt: e.target.prompt.value,
-        init_image: userUploadedImage
+        image: userUploadedImage
           ? await readAsDataURL(userUploadedImage)
           : // only use previous prediction as init image if there's a mask
           maskImage
@@ -125,7 +125,7 @@ export default function Home() {
     setError(null);
     setMaskImage(null);
     setUserUploadedImage(null);
-
+    setFinalUrl(null)
   };
 
   const non_sketch_reset = async () => {
@@ -139,6 +139,7 @@ export default function Home() {
     setMaskImage(null);
     setUserUploadedImage(null);
     setSelected(0)
+    setFinalUrl(null)
   };
 
   const router = useRouter();
@@ -161,7 +162,7 @@ export default function Home() {
         <MyButtonGroup selected={selected} setSelected = {setSelected} select_reset = {select_reset} non_sketch_reset = {non_sketch_reset}></MyButtonGroup>
       </div>
       <main className="container mx-auto p-5">
-        {error && <div>{error}</div>}
+        {/* {error && <div>{error}</div>} */}
         
         <div className="border-hairline max-w-[512px] mx-auto relative ">
           

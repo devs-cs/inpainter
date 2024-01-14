@@ -18,11 +18,13 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.88.0",
     "next": "^12.3.0",
+    "png-js": "^1.0.0",
     "pngjs": "^6.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.2",
-    "react-sketch-canvas": "^6.2.0"
+    "react-sketch-canvas": "^6.2.0",
+    "sharp": "^0.33.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.8",

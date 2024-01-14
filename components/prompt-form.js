@@ -5,7 +5,7 @@ const samplePrompts = ["A sleek purple outdoor bicycle against a cityscape backg
 "High-tech running shoes with futuristic design elements.",
 "Elegant wristwatch with intricate detailing, reminiscent of a Rolex.",
 "A cozy, modern armchair in a minimalist living room setting.",
-"A vibrant, abstract painting of a summer dress.",
+"A vibrant summer dress decorated with poppies and flowers .",
 "A set of professional chef's knives displayed on a wooden cutting board.",
 "A sophisticated, high-end laptop with a sleek, metallic finish."]
 

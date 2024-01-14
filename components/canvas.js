@@ -91,6 +91,7 @@ export default class Canvas extends React.Component {
                 strokeColor={this.props.select == 0 ? "transparent": "black"}
                 canvasColor="transparent"
                 onChange={this.onChange}
+                style={this.props.select == 1? {opacity: 0.5} : {}}
               />
             </div>
           )}

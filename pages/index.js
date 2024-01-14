@@ -5,53 +5,62 @@ export default function About() {
   return (
     <div className="max-w-[512px] mx-auto p-10 bg-white rounded-lg">
       <Head>
-        <title>Inpainting with Stable Diffusion &amp; Replicate</title>
+        <title>ShopVisual</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      {/* <h1 className="text-center text-7xl pb-3">🎨</h1> */}
-      <p className="pb-5 text-lg">
-        <strong>Inpainting</strong> is a process where missing parts of an
-        artwork are filled in to present a complete image. This{" "}
-        <a className="underline" href="https://github.com/zeke/inpainter">
-          open-source demo
-        </a>{" "}
-        uses the{" "}
-        <a
-          className="underline"
-          href="https://replicate.com/stability-ai/stable-diffusion"
-        >
-          Stable Diffusion
-        </a>{" "}
-        machine learning model and{" "}
-        <a className="underline" href="https://replicate.com">
-          Replicate&apos;s API
-        </a>{" "}
-        to inpaint images right in your browser.
-      </p>
 
+      <div className="text-left mb-5">
+        <h1 className="text-5xl font-bold">Design Your World</h1>
+        <h2 className="text-5xl font-bold text-orange-500">Shop Visual</h2>
+      </div>
+      
       <Link href="/paint">
         <video autoPlay loop muted playsInline className="w-full cursor-pointer">
-          <source src="/cherries-oranges-bananas.mp4" />
+          <source src="/demo.mp4" />
         </video>
       </Link>
 
-      {/* <ol className="list-decimal pl-5">
+      <p className="mt-5 pb-5 text-lg">
+        When there are <em>billions</em> of purchasable items, natural language queries are simply not enough to narrow the choices down.
+      </p>
+
+      <div className="flex justify-center items-center h-[desired-height]">
+  <p className="text-orange-500 text-xl font-extrabold  decoration-2 underline-offset-2 text-center pb-5">
+    <strong>We are redefining shopping through accessible image interfaces.</strong>
+  </p>
+</div>
+
+
+      <p className  = "pb-5 text-lg">
+      In the spirit of an image is worth 1000 words, we are making it easy to search for and find what would otherwise be complicated queries and allowing you to see those items, rather than simply describe them.
+      </p>
+
+      <p className="pb-5 text-lg">
+        Change items in your environment with our generative tools or design items from scratch and purchase the results.
+      </p>
+
+      <p className="pb-5 text-lg">
+        This is the <strong> Next-Generation </strong> of shopping, helping you buy exactly what you need rather than scrolling endlessly.
+      </p>
+
+      
+
+      <ol className="list-decimal pl-5">
         <li className="mb-2">
-          Enter a text prompt to generate an image, or upload your own starting
-          image.
+          Enter a text prompt to generate an image, upload your own starting
+          image, or sketch an outline to start.
         </li>
         <li className="mb-2">
-          Click and drag with your mouse to erase unwanted parts of the image.
+          Make thematic changes or generative edits through natural language and inpainting.  
         </li>
         <li className="mb-2">
-          Refine your text prompt (or leave it untouched) and let the model
-          generate a new inpainted image.
+          Find similar items online and for sale at the click of a button.
         </li>
-      </ol> */}
+      </ol>
 
       <Link href="/paint">
         <a className="py-3 block text-center bg-black text-white rounded-md mt-10">
-          Start painting
+          Start Designing
         </a>
       </Link>
     </div>
