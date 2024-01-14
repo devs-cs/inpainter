@@ -54,8 +54,12 @@ export default function About() {
           Make thematic changes or generative edits through natural language and inpainting.  
         </li>
         <li className="mb-2">
-          Find similar items online and for sale at the click of a button.
+          Find similar items online and for sale with one click.
         </li>
+        <li className="mb-2">
+          Download images to make final touches in an editor of your choice.
+        </li>
+
       </ol>
 
       <Link href="/paint">
